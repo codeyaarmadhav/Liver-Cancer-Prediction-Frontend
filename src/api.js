@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// Backend base URL — replace with deployed link later (e.g., Render, Vercel, etc.)
-export const BASE_URL = "http://127.0.0.1:8000";
+// Backend base URL — NO trailing slash--link areaa
+export const BASE_URL = "https://liver-cancer-prediction-backend.onrender.com";
 
 /**
  * 🔹 Predict liver cancer risk using fuzzy model
@@ -10,7 +10,7 @@ export const BASE_URL = "http://127.0.0.1:8000";
  */
 export async function predictRisk(payload) {
   try {
-    const res = await axios.post(BASE_URL, payload);
+    const res = await axios.post(`${BASE_URL}/`, payload);
     return res.data;
   } catch (err) {
     console.error("API Error (predictRisk):", err);
@@ -18,7 +18,10 @@ export async function predictRisk(payload) {
   }
 }
 
-
+/**
+ * 🔹 Fetch evaluation metrics from backend
+ * Endpoint: GET /evaluate
+ */
 export async function getModelEvaluation() {
   try {
     const res = await axios.get(`${BASE_URL}/evaluate`);

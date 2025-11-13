@@ -7,7 +7,7 @@ export default function ModelDetails() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchMetrics() {
+    async function fetchData() {
       try {
         const data = await getModelEvaluation();
         setMetrics(data);
@@ -18,7 +18,7 @@ export default function ModelDetails() {
         setLoading(false);
       }
     }
-    fetchMetrics();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -38,11 +38,9 @@ export default function ModelDetails() {
   return (
     <div className="details-container">
       <h2>📊 Model Evaluation Metrics</h2>
-      <p className="subtitle">
-        Performance overview from fuzzy liver prediction model
-      </p>
+      <p className="subtitle">Performance overview from fuzzy liver prediction model</p>
 
-      
+      {/* Bold Accuracy Badge */}
       <div className="accuracy-badge">
         <strong>Accuracy: {accuracy}%</strong>
       </div>
