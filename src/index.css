@@ -147,6 +147,21 @@ input, select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(25
 /* footer */
 .footer{padding:18px;text-align:center;color:var(--muted);font-size:13px}
 
+
+.primary-btn {
+  background: linear-gradient(90deg, var(--accent), #34d399);
+  color: #042022;
+}
+
+.hero-text, .hero-list {
+  color: var(--muted);
+}
+
+.why-card {
+  margin-top: 18px;
+}
+
+
 /* ========================= */
 /* RESPONSIVE RULES */
 /* ========================= */
@@ -202,3 +217,4 @@ input, select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(25
   .section{padding:14px}
   main{padding:10px}
 }
+
