@@ -209,6 +209,17 @@ input, select{
   font-size:13px;
 }
 
+.error-box {
+  margin-top: 10px;
+  color: #f87171;
+  font-size: 14px;
+  background: rgba(255,0,0,0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border-left: 3px solid #ef4444;
+}
+
+
 /* ========================= */
 /* RESPONSIVE RULES */
 /* ========================= */

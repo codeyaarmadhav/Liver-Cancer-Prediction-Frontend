@@ -15,7 +15,6 @@ const initial = {
   AGR: "",
 };
 
-// Define realistic value ranges (from ILPD dataset)
 const ranges = {
   Age: [1, 90],
   TB: [0, 20],
@@ -54,15 +53,9 @@ export default function PredictForm() {
 
   async function handlePredict() {
     setError(null);
-    setPrediction(null);
-
     const v = validate();
-    if (v) {
-      setError(v);
-      return;
-    }
+    if (v) return setError(v);
 
-    //  Map frontend variable names to backend schema
     const payload = {
       Age: parseFloat(form.Age),
       Gender: form.Gender === "1" ? "M" : "F",
@@ -79,15 +72,13 @@ export default function PredictForm() {
     try {
       setLoading(true);
       const res = await predictRisk(payload);
-      const data = {
+      setPrediction({
         risk_value: res.risk_score,
         risk_level: res.risk_category,
         message: res.message,
-      };
-      setPrediction(data);
+      });
     } catch (err) {
-      console.error(err);
-      setError(err?.response?.data?.detail || err.message || "Server error");
+      setError(err?.response?.data?.detail || "Server error");
     } finally {
       setLoading(false);
     }
@@ -96,19 +87,22 @@ export default function PredictForm() {
   return (
     <div className="form-wrap">
       <h2>Enter Test Values</h2>
-      <p style={{ color: "var(--muted)" }}>
-        Enter floating numeric values (no negatives). Follow normal lab report units.
+      <p className="hero-text">
+        Enter numeric values only — match your lab units.
       </p>
 
       <style>{`
-        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
           -webkit-appearance: none;
           margin: 0;
         }
-        input[type=number] { -moz-appearance: textfield; }
+        input[type=number] {
+          -moz-appearance: textfield;
+        }
       `}</style>
 
+      {/* Compact grouping */}
       <div className="form-row">
         <div className="form-col">
           <label>Age (years)</label>
@@ -117,7 +111,6 @@ export default function PredictForm() {
             value={form.Age}
             onChange={onChange}
             type="number"
-            inputMode="decimal"
             placeholder="e.g., 55"
           />
         </div>
@@ -130,38 +123,27 @@ export default function PredictForm() {
         </div>
       </div>
 
-      {[
-        ["TB", "Total Bilirubin (mg/dL)"],
-        ["DB", "Direct Bilirubin (mg/dL)"],
-        ["Alkphos", "Alkaline Phosphatase (IU/L)"],
-        ["Sgpt", "SGPT / ALT (IU/L)"],
-        ["Sgot", "SGOT / AST (IU/L)"],
-        ["TP", "Total Proteins (g/dL)"],
-        ["ALB", "Albumin (g/dL)"],
-        ["AGR", "Albumin-Globulin Ratio"],
-      ].map(([k, label]) => (
-        <div key={k} className="form-row">
-          <div className="form-col">
-            <label>{label}</label>
-            <input
-              name={k}
-              type="number"
-              inputMode="decimal"
-              step="any"
-              min={ranges[k][0]}
-              max={ranges[k][1]}
-              placeholder={`${ranges[k][0]} - ${ranges[k][1]}`}
-              value={form[k]}
-              onChange={onChange}
-            />
+      {Object.entries(ranges)
+        .filter(([k]) => k !== "Age")
+        .map(([k, [min, max]]) => (
+          <div key={k} className="form-row">
+            <div className="form-col">
+              <label>{k}</label>
+              <input
+                name={k}
+                type="number"
+                placeholder={`${min} - ${max}`}
+                value={form[k]}
+                onChange={onChange}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      {error && <div style={{ color: "salmon", marginTop: 8 }}>{error}</div>}
+      {error && <div className="error-box">{error}</div>}
 
       <div className="form-actions">
-        <button className="btn" onClick={handlePredict} disabled={loading}>
+        <button className="btn primary-btn" onClick={handlePredict} disabled={loading}>
           {loading ? "Predicting..." : "Predict Risk"}
         </button>
         <button
