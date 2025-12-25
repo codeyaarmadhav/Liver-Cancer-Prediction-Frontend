@@ -1,4 +1,5 @@
 import React from "react";
+import "./ResultCard.css";
 
 export default function ResultCard({ prediction }) {
   if (!prediction) return null;
@@ -8,77 +9,34 @@ export default function ResultCard({ prediction }) {
   const msg = prediction.message || "";
 
   const cls =
-    level === "low"
-      ? "low"
-      : level === "medium"
-      ? "medium"
-      : "high";
+    level === "low" ? "low" :
+    level === "medium" ? "medium" : "high";
 
-  // Map risk score (0–1) to progress width %
   const widthPercent = Math.min(Math.max(val * 100, 0), 100);
 
   return (
-    <div className="result" style={{ flexDirection: "column", alignItems: "stretch" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div>
-          <div style={{ color: "var(--muted)" }}>Risk Score</div>
+    <div className="result-card">
+      <div className="result-header">
+        <div className="score-section">
+          <div className="label">Risk Score</div>
           <div className="value">{val?.toFixed(3)}</div>
         </div>
-        <div style={{ textAlign: "right" }}>
-          <div className={cls} style={{ minWidth: 110, textTransform: "capitalize" }}>
-            {level}
-          </div>
+
+        <div className={`risk-badge ${cls}`}>
+          {level}
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div
-        style={{
-          height: "10px",
-          borderRadius: "5px",
-          background: "rgba(255,255,255,0.1)",
-          marginTop: "10px",
-          overflow: "hidden",
-        }}
-      >
+      <div className="progress-bar">
         <div
-          style={{
-            width: `${widthPercent}%`,
-            height: "100%",
-            transition: "width 0.6s ease",
-            background:
-              level === "low"
-                ? "#16a34a"
-                : level === "medium"
-                ? "#facc15"
-                : "#dc2626",
-          }}
+          className={`progress-fill ${cls}`}
+          style={{ width: `${widthPercent}%` }}
         />
       </div>
 
-      {/* Message from backend */}
-      {msg && (
-        <div
-          style={{
-            marginTop: "12px",
-            color: "var(--muted)",
-            fontSize: "14px",
-            lineHeight: "1.5",
-          }}
-        >
-          {msg}
-        </div>
-      )}
+      {msg && <div className="result-msg">{msg}</div>}
 
-      {/* Note */}
-      <div
-        style={{
-          color: "var(--muted)",
-          marginTop: "10px",
-          fontSize: "13px",
-          fontStyle: "italic",
-        }}
-      >
+      <div className="disclaimer">
         Note: This is a screening score — not a medical diagnosis.
       </div>
     </div>
