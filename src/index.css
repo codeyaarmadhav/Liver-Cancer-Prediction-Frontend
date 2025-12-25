@@ -162,6 +162,25 @@ input, select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(25
 }
 
 
+/* Improved secondary button styling */
+.btn.secondary {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn.secondary:hover {
+  background: var(--accent);
+  color: #042022;
+  transition: 0.25s ease;
+}
+
+
+
 /* ========================= */
 /* RESPONSIVE RULES */
 /* ========================= */
