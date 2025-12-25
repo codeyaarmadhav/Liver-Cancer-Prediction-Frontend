@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Landing(){
   return (
     <>
-      <section className="hero">
+      <section className="hero container">
         <div className="hero-left">
           <h1 className="h-title">Liver Cancer Prediction System</h1>
           <div className="h-sub">Using interpretable fuzzy rule-based system — early detection assistance (not clinical diagnosis)</div>

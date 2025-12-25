@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="app-root">
       {/* ---------------- HEADER / NAVBAR ---------------- */}
-      <header className="nav">
+      <header className="nav container">
         <div className="brand">
           <Link to="/">
             <span className="logo">Liver Cancer Prediction System</span>
