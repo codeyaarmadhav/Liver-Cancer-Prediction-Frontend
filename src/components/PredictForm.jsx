@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { predictRisk } from "../api";
 import ResultCard from "./ResultCard";
 
@@ -15,6 +15,30 @@ const initial = {
   AGR: "",
 };
 
+const labels = {
+  Age: "Age (years)",
+  TB: "Total Bilirubin (mg/dL)",
+  DB: "Direct Bilirubin (mg/dL)",
+  Alkphos: "Alkaline Phosphatase (IU/L)",
+  Sgpt: "SGPT / ALT (IU/L)",
+  Sgot: "SGOT / AST (IU/L)",
+  TP: "Total Proteins (g/dL)",
+  ALB: "Albumin (g/dL)",
+  AGR: "Albumin-Globulin Ratio",
+};
+
+const tooltips = {
+  Age: "Older age may increase liver disease risk.",
+  TB: "Higher bilirubin suggests liver dysfunction.",
+  DB: "Elevated in cholestasis or obstruction.",
+  Alkphos: "Raises in bile duct block or liver injury.",
+  Sgpt: "Liver cell injury (ALT enzyme).",
+  Sgot: "Enzyme linked with hepatocellular injury.",
+  TP: "Low total protein can indicate liver impairment.",
+  ALB: "Albumin made by liver — low signals dysfunction.",
+  AGR: "Ratio helps detect chronic liver disease.",
+};
+
 const ranges = {
   Age: [1, 90],
   TB: [0, 20],
@@ -29,32 +53,40 @@ const ranges = {
 
 export default function PredictForm() {
   const [form, setForm] = useState(initial);
+  const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
   const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState(null);
+  const resultRef = useRef(null);
 
-  function onChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-  }
+  };
 
-  function validate() {
-    for (const [k, [min, max]] of Object.entries(ranges)) {
-      const val = parseFloat(form[k]);
-      if (isNaN(val)) return `${k} must be a number.`;
-      if (val < min || val > max) return `${k} should be between ${min} and ${max}.`;
-      if (val < 0) return `${k} must be positive.`;
-    }
-    if (!(form.Gender === "0" || form.Gender === "1")) {
-      return "Gender must be 0 (Female) or 1 (Male)";
-    }
-    return null;
-  }
+  const markTouched = (name) => {
+    setTouched((prev) => ({ ...prev, [name]: true }));
+  };
 
-  async function handlePredict() {
+  const validateField = (name) => {
+    if (name === "Gender") return true;
+    const val = parseFloat(form[name]);
+    if (isNaN(val)) return false;
+    const [min, max] = ranges[name];
+    return val >= min && val <= max;
+  };
+
+  const asyncPredict = async () => {
     setError(null);
-    const v = validate();
-    if (v) return setError(v);
+    setPrediction(null);
+
+    // Validate form
+    for (const k in ranges) {
+      if (!validateField(k)) {
+        setError("Please correct invalid inputs.");
+        return;
+      }
+    }
 
     const payload = {
       Age: parseFloat(form.Age),
@@ -77,65 +109,71 @@ export default function PredictForm() {
         risk_level: res.risk_category,
         message: res.message,
       });
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 200);
     } catch (err) {
       setError(err?.response?.data?.detail || "Server error");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="form-wrap">
       <h2>Enter Test Values</h2>
-      <p className="hero-text">
-        Enter numeric values only — match your lab units.
-      </p>
+      <p className="form-hint">Enter numeric values only — match lab units.</p>
 
-      <style>{`
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-        input[type=number] {
-          -moz-appearance: textfield;
-        }
-      `}</style>
-
-      {/* Compact grouping */}
+      {/* Age + Gender */}
       <div className="form-row">
         <div className="form-col">
-          <label>Age (years)</label>
+          <label>
+            Age (years)
+            <span className="tip" title={tooltips.Age}>ⓘ</span>
+          </label>
           <input
             name="Age"
-            value={form.Age}
-            onChange={onChange}
             type="number"
+            value={form.Age}
+            onChange={handleChange}
+            onBlur={() => markTouched("Age")}
             placeholder="e.g., 55"
           />
+          {touched.Age && (
+            <span className={validateField("Age") ? "valid" : "invalid"} />
+          )}
         </div>
+
         <div className="form-col">
           <label>Gender</label>
-          <select name="Gender" value={form.Gender} onChange={onChange}>
+          <select name="Gender" value={form.Gender} onChange={handleChange}>
             <option value="1">Male (1)</option>
             <option value="0">Female (0)</option>
           </select>
         </div>
       </div>
 
-      {Object.entries(ranges)
-        .filter(([k]) => k !== "Age")
-        .map(([k, [min, max]]) => (
+      {/* Remaining Inputs */}
+      {Object.keys(labels)
+        .filter((k) => k !== "Age")
+        .map((k) => (
           <div key={k} className="form-row">
             <div className="form-col">
-              <label>{k}</label>
+              <label>
+                {labels[k]} <span className="tip" title={tooltips[k]}>ⓘ</span>
+              </label>
               <input
                 name={k}
                 type="number"
-                placeholder={`${min} - ${max}`}
+                step="any"
+                placeholder={`${ranges[k][0]} - ${ranges[k][1]}`}
                 value={form[k]}
-                onChange={onChange}
+                onChange={handleChange}
+                onBlur={() => markTouched(k)}
               />
+              {touched[k] && (
+                <span className={validateField(k) ? "valid" : "invalid"} />
+              )}
             </div>
           </div>
         ))}
@@ -143,22 +181,30 @@ export default function PredictForm() {
       {error && <div className="error-box">{error}</div>}
 
       <div className="form-actions">
-        <button className="btn primary-btn" onClick={handlePredict} disabled={loading}>
+        <button
+          className="btn primary-btn"
+          onClick={asyncPredict}
+          disabled={loading}
+        >
           {loading ? "Predicting..." : "Predict Risk"}
         </button>
+
         <button
           className="btn secondary"
           onClick={() => {
             setForm(initial);
-            setPrediction(null);
+            setTouched({});
             setError(null);
+            setPrediction(null);
           }}
         >
           Reset
         </button>
       </div>
 
-      {prediction && <ResultCard prediction={prediction} />}
+      <div ref={resultRef}>
+        {prediction && <ResultCard prediction={prediction} />}
+      </div>
     </div>
   );
 }
