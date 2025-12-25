@@ -12,10 +12,11 @@ export default function App() {
 
   return (
     <div className="app-root">
+      
       {/* ---------------- NAVBAR ---------------- */}
-      <header className="nav">
+      <header className="nav container">
         <div className="brand">
-          <Link to="/">
+          <Link to="/" onClick={() => setMenuOpen(false)}>
             <span className="logo">Liver Cancer Prediction System</span>
           </Link>
           <small className="tag">using fuzzy rule based system</small>
@@ -42,7 +43,7 @@ export default function App() {
       </header>
 
       {/* ---------------- ROUTES ---------------- */}
-      <main>
+      <main className="container">
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/about" element={<About />} />
@@ -58,6 +59,7 @@ export default function App() {
         <div>© {new Date().getFullYear()} Liver Cancer Prediction — Fuzzy Rule Based.</div>
         <div>Made for research purposes. Not a medical diagnostic tool.</div>
       </footer>
+
     </div>
   );
 }

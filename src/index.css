@@ -7,7 +7,14 @@
   --glass-2: rgba(255,255,255,0.04);
 }
 
-*{box-sizing:border-box}
+* {
+  box-sizing:border-box;
+}
+
+html, body {
+  width:100%;
+  overflow-x:hidden;
+}
 
 body{
   margin:0;
@@ -201,14 +208,6 @@ input, select{
 }
 .value{font-size:22px;font-weight:700}
 
-/* ========================= */
-.footer{
-  padding:18px;
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-}
-
 .error-box {
   margin-top: 10px;
   color: #f87171;
@@ -219,6 +218,13 @@ input, select{
   border-left: 3px solid #ef4444;
 }
 
+/* ========================= */
+.footer{
+  padding:18px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
 
 /* ========================= */
 /* RESPONSIVE RULES */
