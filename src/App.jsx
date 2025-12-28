@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <div className="app-root">
-      
+
       {/* ---------------- NAVBAR ---------------- */}
       <header className="nav container">
         <div className="brand">
@@ -33,13 +33,19 @@ export default function App() {
           <span />
         </button>
 
-        <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
+        {/* Mobile Slide Navigation */}
+        <div className={`mobile-menu ${menuOpen ? "active" : ""}`}>
           <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>Why this Project</Link>
           <Link to="/variables" onClick={() => setMenuOpen(false)}>Variables</Link>
           <Link to="/predict" onClick={() => setMenuOpen(false)}>Test / Predict</Link>
           <Link to="/model-details" onClick={() => setMenuOpen(false)}>Model Insights</Link>
-        </nav>
+        </div>
+
+        {/* Overlay to close menu */}
+        {menuOpen && (
+          <div className="menu-overlay" onClick={() => setMenuOpen(false)}></div>
+        )}
       </header>
 
       {/* ---------------- ROUTES ---------------- */}
