@@ -44,6 +44,7 @@ body{
 .logo {font-weight:700;font-size:18px;color:var(--accent);}
 .tag {font-size:11px;color:var(--muted);}
 
+/* Desktop nav */
 .nav-links {
   display:flex;
   align-items:center;
@@ -63,7 +64,7 @@ body{
   color:var(--accent);
 }
 
-/* Hamburger Button */
+/* Hamburger */
 .hamburger {
   display:none;
   flex-direction:column;
@@ -80,14 +81,10 @@ body{
   border-radius:10px;
   transition:0.3s ease;
 }
-
-/* Hamburger Animation */
 .hamburger.active span:nth-child(1) {
   transform:translateY(8px) rotate(45deg);
 }
-.hamburger.active span:nth-child(2) {
-  opacity:0;
-}
+.hamburger.active span:nth-child(2) {opacity:0;}
 .hamburger.active span:nth-child(3) {
   transform:translateY(-8px) rotate(-45deg);
 }
@@ -97,42 +94,47 @@ body{
 }
 
 /* ========================= */
-/* BUTTONS — Restored UI */
+/* BUTTONS — UI RESTORED */
 /* ========================= */
-/* ========================= */
-/* BUTTONS SPACING FIX */
-/* ========================= */
+.btn {
+  padding:12px 20px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  font-size:15px;
+  border:2px solid var(--accent);
+  transition:0.25s;
+  white-space:nowrap;
+}
 
+/* Filled Primary */
+.primary-btn {
+  background: var(--accent);
+  color:#042022;
+}
+.primary-btn:hover {
+  background:#34d399;
+  border-color:#34d399;
+}
+
+/* Outline Secondary */
+.secondary-btn {
+  background:transparent;
+  color:var(--accent);
+}
+.secondary-btn:hover {
+  background:var(--accent);
+  color:#042022;
+}
+
+/* Uniform CTA spacing */
 .hero-cta,
 .form-actions,
 .checklist-actions {
-  display: flex;
-  gap: 14px; /* ← spacing fix */
-  flex-wrap: wrap;
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
 }
-
-.hero-cta .btn,
-.form-actions .btn,
-.checklist-actions .btn {
-  margin: 0 !important;
-}
-
-/* Mobile buttons full width still works */
-@media (max-width:600px){
-  .hero-cta,
-  .form-actions,
-  .checklist-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .hero-cta .btn,
-  .form-actions .btn,
-  .checklist-actions .btn {
-    width: 100%;
-  }
-}
-
 
 /* ========================= */
 /* CONTENT */
@@ -146,11 +148,9 @@ main{flex:1;padding:20px}
   box-shadow:0 6px 30px rgba(2,6,23,0.6);
   border:1px solid rgba(255,255,255,0.03);
 }
-
 .hero-left{flex:1}
 .h-title{font-size:34px;margin:0 0 10px}
 .h-sub{color:var(--muted);margin-bottom:14px}
-.hero-cta{display:flex;gap:12px}
 .hero-right{width:420px;background:var(--glass-2);padding:18px;border-radius:12px}
 
 .section{
@@ -197,10 +197,9 @@ input, select{
 }
 
 /* ========================= */
-/* RESPONSIVE NAV */
+/* RESPONSIVENESS */
 /* ========================= */
 @media(max-width:820px){
-
   .nav-links {display:none;}
   .hamburger {display:flex;}
 
@@ -230,10 +229,19 @@ input, select{
   .hero-right{width:100%}
 }
 
-/* Full width buttons mobile */
+/* Full width buttons on small phones */
 @media(max-width:600px){
-  .hero-cta,.form-actions{flex-direction:column;width:100%}
-  .hero-cta .btn,.form-actions .btn{width:100%}
+  .hero-cta,
+  .form-actions,
+  .checklist-actions {
+    flex-direction:column;
+    width:100%;
+  }
+  .hero-cta .btn,
+  .form-actions .btn,
+  .checklist-actions .btn {
+    width:100%;
+  }
 }
 
 @media(max-width:480px){
