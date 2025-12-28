@@ -33,7 +33,7 @@ body{
 /* ========================= */
 /* NAVBAR */
 /* ========================= */
-.nav{
+.nav {
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -42,28 +42,41 @@ body{
   border-bottom:1px solid rgba(255,255,255,0.03);
 }
 
-.brand{
+.brand {
   display:flex;
   flex-direction:column;
 }
 
-.logo{
+.logo {
   font-weight:700;
   font-size:18px;
   color:var(--accent);
 }
 
-.tag{
+.tag {
   font-size:11px;
   color:var(--muted);
 }
 
-/* Hide old nav menu */
+/* Desktop Navbar (default ON) */
 .nav-links {
-  display:none !important;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  position:static;
 }
 
-/* Hamburger */
+.nav-links a {
+  color:var(--muted);
+  text-decoration:none;
+  font-size:15px;
+  font-weight:500;
+}
+.nav-links a:hover {
+  color:var(--accent);
+}
+
+/* Hamburger hidden on desktop */
 .hamburger {
   display:none;
   flex-direction:column;
@@ -73,7 +86,6 @@ body{
   cursor:pointer;
   z-index:1001;
 }
-
 .hamburger span {
   width:24px;
   height:3px;
@@ -85,43 +97,7 @@ body{
 /* MOBILE SLIDE MENU */
 /* ========================= */
 .mobile-menu {
-  position:fixed;
-  top:0;
-  right:-270px;
-  width:270px;
-  height:100vh;
-  background:var(--card);
-  display:flex;
-  flex-direction:column;
-  padding:80px 20px;
-  gap:22px;
-  transition:right 0.35s ease;
-  border-left:1px solid rgba(255,255,255,0.05);
-  z-index:1000;
-}
-
-.mobile-menu.active{
-  right:0;
-}
-
-.mobile-menu a{
-  color:var(--accent);
-  text-decoration:none;
-  font-size:17px;
-  font-weight:600;
-}
-
-.mobile-menu a:hover{
-  color:#8ffef1;
-}
-
-/* Overlay when menu opens */
-.menu-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.4);
-  backdrop-filter:blur(2px);
-  z-index:999;
+  display:none;
 }
 
 /* ========================= */
@@ -137,24 +113,18 @@ body{
   white-space:nowrap;
   transition:0.25s;
 }
-
-/* Filled */
 .btn.primary-btn {
   background: var(--accent);
   color:#042022;
 }
-
 .btn.primary-btn:hover {
   background:#34d399;
   border-color:#34d399;
 }
-
-/* Outline */
 .btn.secondary {
   background:transparent;
   color:var(--accent);
 }
-
 .btn.secondary:hover {
   background:var(--accent);
   color:#042022;
@@ -163,12 +133,12 @@ body{
 /* ========================= */
 /* CONTENT */
 /* ========================= */
-main{
+main {
   flex:1;
   padding:20px;
 }
 
-.hero{
+.hero {
   display:flex;
   gap:30px;
   align-items:center;
@@ -186,20 +156,14 @@ main{
 .h-title{font-size:34px;margin:0 0 10px}
 .h-sub{color:var(--muted);margin-bottom:14px}
 .hero-cta{display:flex;gap:12px}
-
-.hero-right{
+.hero-right {
   width:420px;
   background:var(--glass-2);
   padding:18px;
   border-radius:12px;
 }
 
-.hero-text, .hero-list {
-  color:var(--muted);
-}
-.why-card{margin-top:18px}
-
-.section{
+.section {
   max-width:1100px;
   margin:20px auto;
   padding:20px;
@@ -207,13 +171,13 @@ main{
   border-radius:12px;
 }
 
-.grid{
+.grid {
   display:grid;
   gap:16px;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
 }
 
-.card{
+.card {
   padding:16px;
   background:var(--glass-2);
   border-radius:10px;
@@ -223,7 +187,7 @@ main{
 /* ========================= */
 /* FORM */
 /* ========================= */
-.form-wrap{
+.form-wrap {
   max-width:820px;
   margin:18px auto;
   background:var(--card);
@@ -232,15 +196,7 @@ main{
   border:1px solid rgba(255,255,255,0.04);
 }
 
-.form-hint {
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-
-.form-row{display:flex;gap:12px;margin-bottom:12px}
-.form-col{flex:1}
-
-label{
+label {
   display:flex;
   align-items:center;
   gap:6px;
@@ -249,7 +205,7 @@ label{
   margin-bottom:6px;
 }
 
-input, select{
+input, select {
   width:100%;
   padding:10px;
   border-radius:8px;
@@ -259,25 +215,10 @@ input, select{
   font-size:14px;
 }
 
-.form-actions{display:flex;gap:12px;margin-top:14px}
-
-/* Indicators */
-.valid {
-  background:#16a34a;
-  width:10px;height:10px;
-  border-radius:50%;
-}
-
-.invalid {
-  background:#dc2626;
-  width:10px;height:10px;
-  border-radius:50%;
-}
-
 /* ========================= */
 /* RESULT */
 /* ========================= */
-.result{
+.result {
   margin-top:16px;
   padding:14px;
   border-radius:10px;
@@ -286,28 +227,15 @@ input, select{
   flex-direction:column;
   gap:12px;
   border:1px solid rgba(255,255,255,0.03);
-  animation: fadeIn 0.8s ease forwards;
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(6px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-.value{font-size:22px;font-weight:700}
-
-.error-box {
-  margin-top: 10px;
-  color: #f87171;
-  font-size: 14px;
-  background: rgba(255,0,0,0.1);
-  padding: 8px 12px;
-  border-radius: 8px;
-  border-left: 3px solid #ef4444;
+.value {
+  font-size:22px;
+  font-weight:700;
 }
 
 /* ========================= */
-.footer{
+.footer {
   padding:18px;
   text-align:center;
   color:var(--muted);
@@ -315,33 +243,69 @@ input, select{
 }
 
 /* ========================= */
-/* RESPONSIVENESS */
+/* MOBILE (<=820px) */
 /* ========================= */
-@media (max-width: 820px) {
-  .hamburger{display:flex;}
+@media (max-width:820px) {
 
-  .hero{
+  /* Hide desktop menu */
+  .nav-links {
+    display:none;
+  }
+
+  /* Show hamburger */
+  .hamburger {
+    display:flex;
+  }
+
+  /* Slide menu */
+  .mobile-menu {
+    display:flex;
+    flex-direction:column;
+    position:fixed;
+    top:0;
+    right:-260px;
+    width:260px;
+    height:100vh;
+    background:var(--card);
+    padding:80px 24px;
+    gap:22px;
+    transition:right 0.35s ease;
+    border-left:1px solid rgba(255,255,255,0.05);
+    z-index:1000;
+  }
+  .mobile-menu.active {
+    right:0;
+  }
+  .menu-overlay {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.4);
+    backdrop-filter:blur(2px);
+    z-index:999;
+  }
+
+  .hero {
     flex-direction:column;
     text-align:center;
   }
-
-  .hero-right{width:100%;}
+  .hero-right {width:100%;}
 }
 
-/* Full width buttons mobile */
-@media (max-width: 600px) {
+/* Full width CTA for small phones */
+@media(max-width:600px){
   .hero-cta,
   .form-actions {
-    flex-direction: column;
-    width: 100%;
+    flex-direction:column;
+    width:100%;
   }
   .hero-cta .btn,
   .form-actions .btn {
-    width: 100%;
+    width:100%;
   }
 }
 
-@media (max-width: 480px) {
+/* Tiny Devices */
+@media(max-width:480px){
   .h-title{font-size:26px}
   .hero{padding:20px}
   .section{padding:14px}
