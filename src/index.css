@@ -99,42 +99,40 @@ body{
 /* ========================= */
 /* BUTTONS — Restored UI */
 /* ========================= */
-.btn {
-  padding:12px 22px;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-  font-size:15px;
-  border:2px solid var(--accent);
-  white-space:nowrap;
-  transition:0.25s ease;
-  background:var(--glass-2);
-  color:var(--accent);
-}
-.btn:hover {
-  background:rgba(94,234,212,0.10);
+/* ========================= */
+/* BUTTONS SPACING FIX */
+/* ========================= */
+
+.hero-cta,
+.form-actions,
+.checklist-actions {
+  display: flex;
+  gap: 14px; /* ← spacing fix */
+  flex-wrap: wrap;
 }
 
-.btn.primary-btn,
-.btn.fill {
-  background:var(--accent);
-  color:#042022;
-  border-color:var(--accent);
-}
-.btn.primary-btn:hover,
-.btn.fill:hover {
-  background:#34d399;
-  border-color:#34d399;
+.hero-cta .btn,
+.form-actions .btn,
+.checklist-actions .btn {
+  margin: 0 !important;
 }
 
-.btn.secondary {
-  background:transparent;
-  color:var(--accent);
+/* Mobile buttons full width still works */
+@media (max-width:600px){
+  .hero-cta,
+  .form-actions,
+  .checklist-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta .btn,
+  .form-actions .btn,
+  .checklist-actions .btn {
+    width: 100%;
+  }
 }
-.btn.secondary:hover {
-  background:var(--accent);
-  color:#042022;
-}
+
 
 /* ========================= */
 /* CONTENT */
