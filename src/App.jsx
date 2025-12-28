@@ -15,38 +15,44 @@ export default function App() {
 
       {/* ---------------- NAVBAR ---------------- */}
       <header className="nav container">
-        <div className="brand">
-          <Link to="/" onClick={() => setMenuOpen(false)}>
-            <span className="logo">Liver Cancer Prediction System</span>
-          </Link>
-          <small className="tag">using fuzzy rule based system</small>
-        </div>
+  <div className="brand">
+    <Link to="/" onClick={() => setMenuOpen(false)}>
+      <span className="logo">Liver Cancer Prediction System</span>
+    </Link>
+    <small className="tag">using fuzzy rule based system</small>
+  </div>
 
-        {/* Hamburger Menu */}
-        <button
-          className="hamburger"
-          onClick={() => setMenuOpen((prev) => !prev)}
-          aria-label="Toggle Menu"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+  {/* Desktop Nav */}
+  <nav className="nav-links">
+    <Link to="/">Home</Link>
+    <Link to="/about">Why this Project</Link>
+    <Link to="/variables">Variables</Link>
+    <Link to="/predict">Test / Predict</Link>
+    <Link to="/model-details">Model Insights</Link>
+  </nav>
 
-        {/* Mobile Slide Navigation */}
-        <div className={`mobile-menu ${menuOpen ? "active" : ""}`}>
-          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/about" onClick={() => setMenuOpen(false)}>Why this Project</Link>
-          <Link to="/variables" onClick={() => setMenuOpen(false)}>Variables</Link>
-          <Link to="/predict" onClick={() => setMenuOpen(false)}>Test / Predict</Link>
-          <Link to="/model-details" onClick={() => setMenuOpen(false)}>Model Insights</Link>
-        </div>
+  {/* Hamburger Icon */}
+  <button
+    className={`hamburger ${menuOpen ? "active" : ""}`}
+    onClick={() => setMenuOpen(prev => !prev)}
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-        {/* Overlay to close menu */}
-        {menuOpen && (
-          <div className="menu-overlay" onClick={() => setMenuOpen(false)}></div>
-        )}
-      </header>
+  {/* Mobile Slide Menu */}
+  <div className={`mobile-menu ${menuOpen ? "active" : ""}`}>
+    <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+    <Link to="/about" onClick={() => setMenuOpen(false)}>Why this Project</Link>
+    <Link to="/variables" onClick={() => setMenuOpen(false)}>Variables</Link>
+    <Link to="/predict" onClick={() => setMenuOpen(false)}>Test / Predict</Link>
+    <Link to="/model-details" onClick={() => setMenuOpen(false)}>Model Insights</Link>
+  </div>
+
+  {menuOpen && <div className="menu-overlay" onClick={() => setMenuOpen(false)}></div>}
+</header>
+
 
       {/* ---------------- ROUTES ---------------- */}
       <main className="container">
