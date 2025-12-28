@@ -22,10 +22,12 @@ export default function Landing() {
           {/* CTA Buttons */}
           <div className="hero-cta">
             <Link to="/variables">
-              <button className="btn primary-btn">Test / Predict Risk</button>
+              <button className="btn primary-btn" onClick={() => nav("/predict")}>
+                Test / Predict Risk
+              </button>
             </Link>
             <Link to="/about">
-              <button className="btn secondary">Why this project?</button>
+              <button className="btn secondary-btn">Why this project?</button>
             </Link>
           </div>
 

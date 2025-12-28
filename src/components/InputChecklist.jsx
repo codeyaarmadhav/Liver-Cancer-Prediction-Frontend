@@ -22,7 +22,7 @@ export default function InputChecklist() {
           Proceed to Enter Values
         </button>
 
-        <button className="btn secondary" onClick={() => nav("/variables")}>
+        <button className="btn secondary-btn" onClick={() => nav("/variables")}>
           See variable details
         </button>
       </div>

@@ -190,7 +190,7 @@ export default function PredictForm() {
         </button>
 
         <button
-          className="btn secondary"
+          className="btn secondary-btn"
           onClick={() => {
             setForm(initial);
             setTouched({});
